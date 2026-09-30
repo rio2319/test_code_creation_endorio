@@ -91,10 +91,13 @@ public class Case07 {
 	@DisplayName("テスト03 未提出の研修日の「詳細」ボタンを押下しセクション詳細画面に遷移")
 	void test03() {
 		// TODO ここに追加
+
+		//各日付のコースを全件取得しリスト化
 		List<WebElement> trs = webDriver.findElements(By.tagName("tr"));
 		WebElement detailButton = null;
 		String title = "セクション詳細 | LMS";
 
+		//リストの中から最初に「未提出」となっているコースの詳細ボタンを取得
 		for (WebElement tr : trs) {
 			if (tr.getText().contains("未提出")) {
 				detailButton = tr.findElement(By.cssSelector("input.btn"));
@@ -121,6 +124,7 @@ public class Case07 {
 
 		submitButton.click();
 
+		//レポート登録画面の「提出するボタン」が表示されるまで処理を待機
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("button.btn.btn-primary")));
 
 		assertEquals(title, webDriver.getTitle());
@@ -144,6 +148,7 @@ public class Case07 {
 
 		submitButton.click();
 
+		//提出ボタンが確認するボタンに切り替わっているか確認
 		WebElement checkButton = webDriver.findElement(By.cssSelector("input.btn.btn-default"));
 		assertThat(checkButton.getAttribute("value")).contains(newText);
 
